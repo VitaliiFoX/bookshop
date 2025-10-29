@@ -1,94 +1,114 @@
+// ===== main.cpp =====
 #include <iostream>
 #include <string>
-
+#include <vector>
+#include "../../include/Book.h"
 
 using namespace std;
 
-void ProductCardModule(int &amount, string name[], string description[], double price[], string availability[]);
-void CreateProductCard(int &amount, string name[], string description[], double price[], string availability[]);
-void CheckProductCard(int &amount, string name[], string description[], double price[], string availability[]);
+void ProductCardModule(vector<Book>& books);
+void CreateProductCard(vector<Book>& books);
+void CheckProductCard(const vector<Book>& books);
 void RunApplication();
 
-void RunApplication()
-{
-    string name[50];
-    string description[50];
-    double price[50];
-    string availability[50];
-    int amount = 0;
-
-    ProductCardModule(amount, name, description, price, availability);
+void RunApplication() {
+    vector<Book> books;
+    ProductCardModule(books);
 }
 
-void ProductCardModule(int &amount, string name[], string description[], double price[], string availability[])
-{
+void ProductCardModule(vector<Book>& books) {
     int option;
-    do
-    {
+    do {
         cout << "\nВиберіть потрібний варіант\n";
         cout << "1) Створити картку товару\n";
         cout << "2) Переглянути картку товару\n";
+        cout << "3) Вихід\n";
         cout << "Оберіть опцію: ";
-        cin >> option;
+        if (!(cin >> option)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Невірне введення.\n";
+            continue;
+        }
 
-        switch (option)
-        {
-        case 1:
-            CreateProductCard(amount, name, description, price, availability);
-            break;
-        case 2:
-            CheckProductCard(amount, name, description, price, availability);
-            break;
-        default:
-            cout << "Невідома опція.\n";
-            break;
+        switch (option) {
+            case 1:
+                CreateProductCard(books);
+                break;
+            case 2:
+                CheckProductCard(books);
+                break;
+            case 3:
+                cout << "Вихід...\n";
+                break;
+            default:
+                cout << "Невідома опція.\n";
+                break;
         }
     } while (option != 3);
 }
 
-void CreateProductCard(int &amount, string name[], string description[], double price[], string availability[])
-{
+void CreateProductCard(vector<Book>& books) {
     cout << "\n-- Створення картки --\n";
+    Book b;
 
     cout << "Напишіть назву книги: ";
-    getline(cin >> ws, name[amount]); 
+    getline(cin >> ws, b.title);
 
-    cout << "Напишіть опис книги: ";
-    getline(cin >> ws, description[amount]);
+    cout << "Напишіть автора: ";
+    getline(cin, b.author);
+
+    cout << "Вкажіть жанр: ";
+    getline(cin, b.genre);
+
+    cout << "Введіть рік видання: ";
+    while (!(cin >> b.year)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Введіть ціле число для року: ";
+    }
 
     cout << "Введіть ціну книги: ";
-    cin >> price[amount];
+    while (!(cin >> b.price)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Введіть число для ціни: ";
+    }
 
-    cout << "Вкажіть наявність книги (Так/Ні): ";
-    getline(cin >> ws, availability[amount]);
+    cout << "Вкажіть наявність (так/ні): ";
+    getline(cin >> ws, b.availability);
 
-    cout << "Номер книги : " << amount + 1 << "\n";
-    amount++;
-
-    cout << "\nКартка товару створена успішно!\n";
+    books.push_back(b);
+    cout << "\nКартка товару створена успішно! Номер книги: " << books.size() << "\n";
 }
 
-void CheckProductCard(int &amount, string name[], string description[], double price[], string availability[])
-{
-    if (amount == 0) {
+void CheckProductCard(const vector<Book>& books) {
+    if (books.empty()) {
         cout << "Немає карток для перегляду.\n";
         return;
     }
 
     cout << "Перегляд картки \n";
-    cout << "Напишіть номер книги (1 - " << amount << "): ";
+    cout << "Напишіть номер книги (1 - " << books.size() << "): ";
     int bookNumber;
-    cin >> bookNumber;
+    if (!(cin >> bookNumber)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Невірне введення.\n";
+        return;
+    }
 
     int idx = bookNumber - 1;
-    if (idx < 0 || idx >= amount) 
-    {
+    if (idx < 0 || idx >= static_cast<int>(books.size())) {
         cout << "Картка з таким номером не існує.\n";
         return;
     }
 
-    cout << "Назва книги: " << name[idx] << endl;
-    cout << "Опис книги: " << description[idx] << endl;
-    cout << "Ціна книги: " << price[idx] << endl;
-    cout << "Чи наявна книга: " << availability[idx] << endl;
+    const Book& b = books[idx];
+    cout << "Назва: "        << b.title        << '\n'
+         << "Автор: "        << b.author       << '\n'
+         << "Жанр: "         << b.genre        << '\n'
+         << "Рік: "          << b.year         << '\n'
+         << "Ціна: "         << b.price        << '\n'
+         << "Наявність: "    << b.availability << '\n';
 }

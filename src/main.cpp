@@ -1,8 +1,14 @@
 #include <iostream>
+#include "../include/Book.h"
+#include "../include/Basket.h"
+#include "../include/UserInput.h"
 #include "user/user.h"
 #include "showBooks/showBooks.h"
 #include "productcard/productcard.h"
 #include "Basket/basket.h"
+
+vector<Book> books;
+vector<Basket> basket;
 
 void showServiceMenu() {
     cout << "\n=== Меню книжкового магазину ===\n";
@@ -14,13 +20,13 @@ void showServiceMenu() {
     cin >> choice;
     switch (choice) {
         case 1:
-            showDetailedBooksMenu();
+            showDetailedBooksMenu(books);
             break;
         case 2:
-            showBasket();
+            showBasket(basket, books);
             break;
         case 3:
-            RunApplication();
+            ProductCardModule(books);
             break;
         default:
             cout << "Неправильний вибір!\n";
@@ -28,6 +34,7 @@ void showServiceMenu() {
 }
 
 int main() {
+    SeedBooks(books);
     showUserMenu();
     while (true) {
         showServiceMenu();

@@ -1,11 +1,13 @@
 #include <iostream>
 #include <string>
+#include "../../include/Basket.h"
 using namespace std;
 
 const int MAX_BOOKS = 100;
 
 // Функція для виведення списку книжок у кошику
-void showCart(string titles[], double prices[], int quantities[], int count) {
+void showCart(vector<Basket> &basket) {
+    int count = basket.size();
     if (count == 0) {
         cout << "Кошик порожній.\n";
         return;
@@ -17,10 +19,10 @@ void showCart(string titles[], double prices[], int quantities[], int count) {
     cout << "-----------------------------------------------\n";
 
     for (int i = 0; i < count; i++) {
-        double sum = prices[i] * quantities[i];
+        double sum = basket[i].book.price * basket[i].quantity;
         total += sum;
-        cout << i + 1 << "\t" << titles[i] << "\t\t" 
-             << prices[i] << "\t" << quantities[i] 
+        cout << i + 1 << "\t" << basket[i].book.title << "\t\t" 
+             << basket[i].book.price << "\t" << basket[i].quantity 
              << "\t\t" << sum << "\n";
     }
 
@@ -29,7 +31,8 @@ void showCart(string titles[], double prices[], int quantities[], int count) {
 }
 
 // Додати книгу до кошика
-void addToCart(string titles[], double prices[], int quantities[], int &count) {
+void addToCart(vector<Basket> &basket, vector<Book> &books) {
+    int count = basket.size();
     if (count >= MAX_BOOKS) {
         cout << "Кошик переповнений!\n";
         return;
@@ -37,22 +40,21 @@ void addToCart(string titles[], double prices[], int quantities[], int &count) {
 
     cout << "Введіть назву книги: ";
     cin.ignore();
-    getline(cin, titles[count]);
+    string title = "";
+    getline(cin, title);
 
-    cout << "Введіть ціну: ";
-    cin >> prices[count];
+    cout << "Введіть кількість книжок: ";
+    int qnty;
+    cin >> qnty;
 
-    cout << "Введіть кількість: ";
-    cin >> quantities[count];
-
-    count++;
-    cout << "Книгу додано до кошика!\n";
+    for (auto book : books) {
+        if (book.title.find(title) != string::npos) {
+            basket.push_back({book, qnty});
+        }
+    }
 }
 
-void showBasket() {
-    string titles[MAX_BOOKS];
-    double prices[MAX_BOOKS];
-    int quantities[MAX_BOOKS];
+void showBasket(vector<Basket> &basket, vector<Book> &books) {
     int count = 0;
     int choice;
 
@@ -66,10 +68,10 @@ void showBasket() {
 
         switch (choice) {
             case 1:
-                addToCart(titles, prices, quantities, count);
+                addToCart(basket, books);
                 break;
             case 2:
-                showCart(titles, prices, quantities, count);
+                showCart(basket);
                 break;
             case 3:
                 cout << "Дякуємо за покупку!\n";

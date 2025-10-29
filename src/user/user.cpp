@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <limits> // для cin.ignore()
+#include "../../include/UserInput.h"
 
 using namespace std;
 
@@ -18,12 +19,6 @@ int orderCount[MAX_USERS] = {0, 2};
 
 // Поточна кількість користувачів
 int currentUserCount = 2;
-
-// Структура для введення даних
-struct UserInput {
-    string email;
-    string password;
-};
 
 // Ввід даних користувача
 UserInput getInput() {
@@ -119,7 +114,10 @@ void showUserMenu() {
         else if (option == 2) {
             int userIndex = login();
             if (userIndex != -1)
+            {
                 personalCabinet(userIndex);
+                break;
+            }
             else
                 cout << " Невірний e-mail або пароль!\n";
         }

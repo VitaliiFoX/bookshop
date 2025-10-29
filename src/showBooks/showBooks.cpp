@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <vector>
+#include "../../include/Book.h"
 using namespace std;
 
 /*
@@ -14,39 +16,26 @@ using namespace std;
 const int MAX_BOOKS = 100;            // Макс. кількість книжок
 const int MAX_USERS = 100;            // Макс. кількість користувачів
 
-struct Book
-{
-    string title;                     // Назва
-    string author;                    // Автор
-    string genre;                     // Жанр
-    int year;                         // Рік видання
-    double price;                     // Ціна
-    string availability;              // Наявність: "так"/"ні"
-};
-
 // ---------------------- "База даних" ----------------------
 
-Book books[MAX_BOOKS];                // Масив книжок
 int bookCount = 0;                    // Поточна к-ть книжок
 
 // ---------------------- Прототипи ----------------------
 
 void SeedBooks();                                                         // Заповнити каталог демо-даними
 void ShowBooksMenu();                                                      // Показати меню
-void ViewAllBooks();                                                      // Перегляд усього каталогу
-void SearchBooks();                                                       // Пошук по назві/автору
+void ViewAllBooks(vector<Book> &books);                                                      // Перегляд усього каталогу
+void SearchBooks(vector<Book> &books);                                                       // Пошук по назві/автору
 void PrintOneBook(const Book& b, int index);                              // Друк 1 книжки
-void showDetailedBooksMenu();
+void showDetailedBooksMenu(vector<Book> &books);
 
 
 // ---------------------- main ----------------------
 
-void showDetailedBooksMenu() {
+void showDetailedBooksMenu(vector<Book> &books) {
     setlocale(LC_CTYPE, "ukr");                                           // Українська локаль (консоль)
     ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    SeedBooks();                                                           // Підготуємо демо-каталог
+    cin.tie(nullptr);                                                        // Підготуємо демо-каталог
 
     while (true)
     {
@@ -57,10 +46,10 @@ void showDetailedBooksMenu() {
         switch (opt)
         {
         case 1:
-            ViewAllBooks();
+            ViewAllBooks(books);
             break;
         case 2:
-            SearchBooks();
+            SearchBooks(books);
             break;
         case 0:
             cout << "До побачення!\n";
@@ -74,20 +63,19 @@ void showDetailedBooksMenu() {
 
 // ---------------------- Ініціалізація книжок ----------------------
 
-void SeedBooks()
+void SeedBooks(vector<Book> &books)
 {
     // Можеш вільно міняти/додавати
-    books[0] = {"Тіні забутих предків", "Михайло Коцюбинський", "Класика", 1911, 199.0, "так"};
-    books[1] = {"Кобзар", "Тарас Шевченко", "Поезія", 1840, 249.0, "так"};
-    books[2] = {"Сто років самотності", "Г. Гарсія Маркес", "Роман", 1967, 299.0, "ні"};
-    books[3] = {"Майстер і Маргарита", "М. Булгаков", "Роман", 1967, 279.0, "так"};
-    books[4] = {"1984", "Джордж Орвелл", "Антиутопія", 1949, 219.0, "так"};
-    books[5] = {"Фінансист", "Теодор Драйзер", "Роман", 1912, 189.0, "ні"};
-    books[6] = {"Пізнай себе", "Д. Карнегі", "Нон-фікшн", 1956, 259.0, "так"};
-    books[7] = {"Чистий код", "Роберт Мартін", "IT", 2008, 849.0, "так"};
-    books[8] = {"Алгоритми", "Кормен/Лайзерсон/Рівест/Штайн", "IT", 2009, 999.0, "ні"};
-    books[9] = {"Мистецтво війни", "Сунь-цзи", "Філософія", -500, 149.0, "так"}; // приблизний рік
-
+    books.push_back({"Тіні забутих предків", "Михайло Коцюбинський", "Класика", 1911, 199.0, "так"});
+    books.push_back({"Кобзар", "Тарас Шевченко", "Поезія", 1840, 249.0, "так"});
+    books.push_back({"Сто років самотності", "Г. Гарсія Маркес", "Роман", 1967, 299.0, "ні"});
+    books.push_back({"Майстер і Маргарита", "М. Булгаков", "Роман", 1967, 279.0, "так"});
+    books.push_back({"1984", "Джордж Орвелл", "Антиутопія", 1949, 219.0, "так"});
+    books.push_back({"Фінансист", "Теодор Драйзер", "Роман", 1912, 189.0, "ні"});
+    books.push_back({"Пізнай себе", "Д. Карнегі", "Нон-фікшн", 1956, 259.0, "так"});
+    books.push_back({"Чистий код", "Роберт Мартін", "IT", 2008, 849.0, "так"});
+    books.push_back({"Алгоритми", "Кормен/Лайзерсон/Рівест/Штайн", "IT", 2009, 999.0, "ні"});
+    books.push_back({"Мистецтво війни", "Сунь-цзи", "Філософія", -500, 149.0, "так"}); // приблизний рік
     bookCount = 10;
 }
 
@@ -115,7 +103,7 @@ void PrintOneBook(const Book& b, int index)
     cout << "Наявність: " << b.availability << "\n";
 }
 
-void ViewAllBooks()
+void ViewAllBooks(vector<Book> &books)
 {
     if (bookCount == 0)
     {
@@ -133,7 +121,7 @@ void ViewAllBooks()
 
 // ---------------------- Пошук ----------------------
 
-void SearchBooks()
+void SearchBooks(vector<Book> &books)
 {
     if (bookCount == 0)
     {
