@@ -76,7 +76,7 @@ void SeedBooks(vector<Book> &books)
     books.push_back({"Чистий код", "Роберт Мартін", "IT", 2008, 849.0, "так"});
     books.push_back({"Алгоритми", "Кормен/Лайзерсон/Рівест/Штайн", "IT", 2009, 999.0, "ні"});
     books.push_back({"Мистецтво війни", "Сунь-цзи", "Філософія", -500, 149.0, "так"}); // приблизний рік
-    bookCount = 10;
+    // bookCount = 10;
 }
 
 // ---------------------- Меню ----------------------
@@ -105,6 +105,7 @@ void PrintOneBook(const Book& b, int index)
 
 void ViewAllBooks(vector<Book> &books)
 {
+    bookCount = books.size();
     if (bookCount == 0)
     {
         cout << "Каталог порожній!\n";
@@ -123,6 +124,7 @@ void ViewAllBooks(vector<Book> &books)
 
 void SearchBooks(vector<Book> &books)
 {
+    bookCount = books.size();
     if (bookCount == 0)
     {
         cout << "Каталог порожній!\n";
