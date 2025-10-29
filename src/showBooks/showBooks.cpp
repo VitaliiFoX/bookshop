@@ -32,16 +32,16 @@ int bookCount = 0;                    // Поточна к-ть книжок
 // ---------------------- Прототипи ----------------------
 
 void SeedBooks();                                                         // Заповнити каталог демо-даними
-void ShowMainMenu();                                                      // Показати меню
+void ShowBooksMenu();                                                      // Показати меню
 void ViewAllBooks();                                                      // Перегляд усього каталогу
 void SearchBooks();                                                       // Пошук по назві/автору
 void PrintOneBook(const Book& b, int index);                              // Друк 1 книжки
+void showDetailedBooksMenu();
 
 
 // ---------------------- main ----------------------
 
-int main()
-{
+void showDetailedBooksMenu() {
     setlocale(LC_CTYPE, "ukr");                                           // Українська локаль (консоль)
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -50,7 +50,7 @@ int main()
 
     while (true)
     {
-        ShowMainMenu();
+        ShowBooksMenu();
         int opt;
         cin >> opt;
 
@@ -64,13 +64,12 @@ int main()
             break;
         case 0:
             cout << "До побачення!\n";
-            return 0;
+            return;
         default:
             cout << "Невірна опція!\n";
             break;
         }
     }
-    return 0;
 }
 
 // ---------------------- Ініціалізація книжок ----------------------

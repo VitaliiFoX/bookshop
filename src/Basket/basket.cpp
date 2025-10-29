@@ -1,54 +1,54 @@
- 
 #include <iostream>
 #include <string>
 using namespace std;
 
 const int MAX_BOOKS = 100;
 
-// Функція для виведення списку книжок у кошику
+// Р¤СѓРЅРєС†С–СЏ РґР»СЏ РІРёРІРµРґРµРЅРЅСЏ СЃРїРёСЃРєСѓ РєРЅРёР¶РѕРє Сѓ РєРѕС€РёРєСѓ
 void showCart(string titles[], double prices[], int quantities[], int count) {
     if (count == 0) {
-        cout << "Кошик порожній.\n";
+        cout << "РљРѕС€РёРє РїРѕСЂРѕР¶РЅС–Р№.\n";
         return;
     }
 
     double total = 0.0;
-    cout << "=== Вміст кошика ===\n";
-    cout << "№\tНазва книги\t\tЦіна\tКількість\tСума\n";
+    cout << "=== Р’РјС–СЃС‚ РєРѕС€РёРєР° ===\n";
+    cout << "в„–\tРќР°Р·РІР° РєРЅРёРіРё\t\tР¦С–РЅР°\tРљС–Р»СЊРєС–СЃС‚СЊ\tРЎСѓРјР°\n";
     cout << "-----------------------------------------------\n";
 
     for (int i = 0; i < count; i++) {
         double sum = prices[i] * quantities[i];
         total += sum;
-        cout << i + 1 << "\t" << titles[i] << "\t\t"
-            << prices[i] << "\t" << quantities[i]
-            << "\t\t" << sum << "\n";
+        cout << i + 1 << "\t" << titles[i] << "\t\t" 
+             << prices[i] << "\t" << quantities[i] 
+             << "\t\t" << sum << "\n";
     }
 
     cout << "-----------------------------------------------\n";
-    cout << "Загальна сума: " << total << " грн\n";
+    cout << "Р—Р°РіР°Р»СЊРЅР° СЃСѓРјР°: " << total << " РіСЂРЅ\n";
 }
 
-// Додати книгу до кошика
-void addToCart(string titles[], double prices[], int quantities[], int& count) {
+// Р”РѕРґР°С‚Рё РєРЅРёРіСѓ РґРѕ РєРѕС€РёРєР°
+void addToCart(string titles[], double prices[], int quantities[], int &count) {
     if (count >= MAX_BOOKS) {
-        cout << "Кошик переповнений!\n";
+        cout << "РљРѕС€РёРє РїРµСЂРµРїРѕРІРЅРµРЅРёР№!\n";
         return;
     }
 
-    cout << "Введіть назву книги: ";
+    cout << "Р’РІРµРґС–С‚СЊ РЅР°Р·РІСѓ РєРЅРёРіРё: ";
     cin.ignore();
     getline(cin, titles[count]);
 
-    cout << "Введіть ціну: ";
+    cout << "Р’РІРµРґС–С‚СЊ С†С–РЅСѓ: ";
     cin >> prices[count];
 
-    cout << "Введіть кількість: ";
+    cout << "Р’РІРµРґС–С‚СЊ РєС–Р»СЊРєС–СЃС‚СЊ: ";
     cin >> quantities[count];
 
     count++;
-    cout << "Книгу додано до кошика!\n";
+    cout << "РљРЅРёРіСѓ РґРѕРґР°РЅРѕ РґРѕ РєРѕС€РёРєР°!\n";
 }
+
 void showBasket() {
     string titles[MAX_BOOKS];
     double prices[MAX_BOOKS];
@@ -57,59 +57,25 @@ void showBasket() {
     int choice;
 
     do {
-        cout << "\n=== Меню книжкового магазину ===\n";
-        cout << "1. Додати книгу до кошика\n";
-        cout << "2. Переглянути кошик\n";
-        cout << "3. Вихід\n";
-        cout << "Ваш вибір: ";
+        cout << "\n=== РњРµРЅСЋ РєРЅРёР¶РєРѕРІРѕРіРѕ РјР°РіР°Р·РёРЅСѓ ===\n";
+        cout << "1. Р”РѕРґР°С‚Рё РєРЅРёРіСѓ РґРѕ РєРѕС€РёРєР°\n";
+        cout << "2. РџРµСЂРµРіР»СЏРЅСѓС‚Рё РєРѕС€РёРє\n";
+        cout << "3. Р’РёС…С–Рґ\n";
+        cout << "Р’Р°С€ РІРёР±С–СЂ: ";
         cin >> choice;
 
         switch (choice) {
-        case 1:
-            addToCart(titles, prices, quantities, count);
-            break;
-        case 2:
-            showCart(titles, prices, quantities, count);
-            break;
-        case 3:
-            cout << "Дякуємо за покупку!\n";
-            break;
-        default:
-            cout << "Неправильний вибір!\n";
+            case 1:
+                addToCart(titles, prices, quantities, count);
+                break;
+            case 2:
+                showCart(titles, prices, quantities, count);
+                break;
+            case 3:
+                cout << "Р”СЏРєСѓС”РјРѕ Р·Р° РїРѕРєСѓРїРєСѓ!\n";
+                break;
+            default:
+                cout << "РќРµРїСЂР°РІРёР»СЊРЅРёР№ РІРёР±С–СЂ!\n";
         }
     } while (choice != 3);
-    }
-
-int main() {
-    string titles[MAX_BOOKS];
-    double prices[MAX_BOOKS];
-    int quantities[MAX_BOOKS];
-    int count = 0;
-    int choice;
-
-    do {
-        cout << "\n=== Меню книжкового магазину ===\n";
-        cout << "1. Додати книгу до кошика\n";
-        cout << "2. Переглянути кошик\n";
-        cout << "3. Вихід\n";
-        cout << "Ваш вибір: ";
-        cin >> choice;
-
-        switch (choice) {
-        case 1:
-            addToCart(titles, prices, quantities, count);
-            break;
-        case 2:
-            showCart(titles, prices, quantities, count);
-            break;
-        case 3:
-            cout << "Дякуємо за покупку!\n";
-            break;
-        default:
-            cout << "Неправильний вибір!\n";
-        }
-    } while (choice != 3);
-
-    return 0;
-   
 }

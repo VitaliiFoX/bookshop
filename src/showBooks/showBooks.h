@@ -1,1 +1,1 @@
-void showBooksMenu();
+void showDetailedBooksMenu();

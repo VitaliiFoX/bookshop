@@ -9,13 +9,6 @@ void CreateProductCard(int &amount, string name[], string description[], double 
 void CheckProductCard(int &amount, string name[], string description[], double price[], string availability[]);
 void RunApplication();
 
-int main()
-{
-    setlocale(LC_CTYPE, "ukr");
-    RunApplication();
-    return 0;
-}
-
 void RunApplication()
 {
     string name[50];
