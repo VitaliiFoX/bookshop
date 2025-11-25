@@ -13,8 +13,8 @@ using namespace std;
 
 // ---------------------- Константи та структури ----------------------
 
-const int MAX_BOOKS = 10000;            // Макс. кількість книжок
-const int MAX_USERS = 10000;            // Макс. кількість користувачів
+const int MAX_BOOKS = 1000;            // Макс. кількість книжок
+const int MAX_USERS = 100;            // Макс. кількість користувачів
 
 // ---------------------- "База даних" ----------------------
 
@@ -120,6 +120,12 @@ void ViewAllBooks(vector<Book> &books)
     cout << "\nКінець списку.\n";
 }
 
+string toLowerStr(const string& s) {
+    string r = s;
+    for (char& c : r) c = tolower(c);
+    return r;
+}
+
 // ---------------------- Пошук ----------------------
 
 void SearchBooks(vector<Book> &books)
@@ -147,7 +153,7 @@ void SearchBooks(vector<Book> &books)
         int hits = 0;
         for (int i = 0; i < bookCount; ++i)
         {
-            if (books[i].title.find(q) != string::npos) // чутливо до регістру
+            if (toLowerStr(books[i].title).find(toLowerStr(q)) != string::npos)
             {
                 PrintBook(books[i], i);
                 ++hits;
@@ -163,7 +169,7 @@ void SearchBooks(vector<Book> &books)
         int hits = 0;
         for (int i = 0; i < bookCount; ++i)
         {
-            if (books[i].author.find(q) != string::npos)
+        if (toLowerStr(books[i].author).find(toLowerStr(q)) != string::npos)
             {
                 PrintBook(books[i], i);
                 ++hits;
