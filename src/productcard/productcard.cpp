@@ -197,3 +197,68 @@ void EditProductCard(vector<Book>& books) {
 
     cout << "\nКартку успішно змінено!\n";
 }
+
+void EditProductCard(int &amount, string name[], string description[], double price[], string availability[])
+{
+    if (amount == 0) {
+        cout << "Немає карток для редагування.\n";
+        return;
+    }
+
+    cout << "\n-- Редагування картки товару --\n";
+    cout << "Введіть номер книги (1 - " << amount << "): ";
+
+    int bookNumber;
+    cin >> bookNumber;
+
+    int idx = bookNumber - 1;
+    if (idx < 0 || idx >= amount)
+    {
+        cout << "Картка з таким номером не існує.\n";
+        return;
+    }
+
+    cout << "\nПоточні дані:\n";
+    cout << "1) Назва: " << name[idx] << endl;
+    cout << "2) Опис: " << description[idx] << endl;
+    cout << "3) Ціна: " << price[idx] << endl;
+    cout << "4) Наявність: " << availability[idx] << endl;
+
+    cout << "\nЩо бажаєте змінити?\n";
+    cout << "1 - Назву\n";
+    cout << "2 - Опис\n";
+    cout << "3 - Ціну\n";
+    cout << "4 - Наявність\n";
+    cout << "Оберіть опцію: ";
+
+    int option;
+    cin >> option;
+
+    cin.ignore(); // очищення буфера
+
+    switch (option)
+    {
+    case 1:
+        cout << "Нова назва: ";
+        getline(cin, name[idx]);
+        break;
+    case 2:
+        cout << "Новий опис: ";
+        getline(cin, description[idx]);
+        break;
+    case 3:
+        cout << "Нова ціна: ";
+        cin >> price[idx];
+        break;
+    case 4:
+        cout << "Нова наявність (Так/Ні): ";
+        getline(cin, availability[idx]);
+        break;
+    default:
+        cout << "Невідома опція.\n";
+        return;
+    }
+
+    cout << "\nКартку успішно змінено!\n";
+}
+
