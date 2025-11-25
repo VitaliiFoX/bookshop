@@ -26,7 +26,7 @@ void SeedBooks();                                                         // З�
 void ShowBooksMenu();                                                      // Показати меню
 void ViewAllBooks(vector<Book> &books);                                                      // Перегляд усього каталогу
 void SearchBooks(vector<Book> &books);                                                       // Пошук по назві/автору
-void PrintOneBook(const Book& b, int index);                              // Друк 1 книжки
+void PrintBook(const Book& b, int index);                              // Друк 1 книжки
 void showDetailedBooksMenu(vector<Book> &books);
 
 
@@ -92,7 +92,7 @@ void ShowBooksMenu()
 
 // ---------------------- Перегляд ----------------------
 
-void PrintOneBook(const Book& b, int index)
+void PrintBook(const Book& b, int index)
 {
     cout << "\nКнига #" << index + 1 << ":\n";
     cout << "Назва: " << b.title << "\n";
@@ -115,7 +115,7 @@ void ViewAllBooks(vector<Book> &books)
     cout << "\n--- Увесь каталог (" << bookCount << ") ---\n";
     for (int i = 0; i < bookCount; ++i)
     {
-        PrintOneBook(books[i], i);
+        PrintBook(books[i], i);
     }
     cout << "\nКінець списку.\n";
 }
@@ -149,7 +149,7 @@ void SearchBooks(vector<Book> &books)
         {
             if (books[i].title.find(q) != string::npos) // чутливо до регістру
             {
-                PrintOneBook(books[i], i);
+                PrintBook(books[i], i);
                 ++hits;
             }
         }
@@ -165,7 +165,7 @@ void SearchBooks(vector<Book> &books)
         {
             if (books[i].author.find(q) != string::npos)
             {
-                PrintOneBook(books[i], i);
+                PrintBook(books[i], i);
                 ++hits;
             }
         }
