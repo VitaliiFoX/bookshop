@@ -9,6 +9,7 @@ using namespace std;
 void ProductCardModule(vector<Book>& books);
 void CreateProductCard(vector<Book>& books);
 void CheckProductCard(const vector<Book>& books);
+void EditProductCard(vector<Book>& books);   // ← додано
 void RunApplication();
 
 void RunApplication() {
@@ -22,8 +23,10 @@ void ProductCardModule(vector<Book>& books) {
         cout << "\nВиберіть потрібний варіант\n";
         cout << "1) Створити картку товару\n";
         cout << "2) Переглянути картку товару\n";
-        cout << "3) Вихід\n";
+        cout << "3) Редагувати картку товару\n";  // ← нова опція
+        cout << "4) Вихід\n";
         cout << "Оберіть опцію: ";
+
         if (!(cin >> option)) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -39,13 +42,16 @@ void ProductCardModule(vector<Book>& books) {
                 CheckProductCard(books);
                 break;
             case 3:
+                EditProductCard(books);
+                break;
+            case 4:
                 cout << "Вихід...\n";
                 break;
             default:
                 cout << "Невідома опція.\n";
                 break;
         }
-    } while (option != 3);
+    } while (option != 4);
 }
 
 void CreateProductCard(vector<Book>& books) {
@@ -111,4 +117,83 @@ void CheckProductCard(const vector<Book>& books) {
          << "Рік: "          << b.year         << '\n'
          << "Ціна: "         << b.price        << '\n'
          << "Наявність: "    << b.availability << '\n';
+}
+
+void EditProductCard(vector<Book>& books) {
+    if (books.empty()) {
+        cout << "Немає карток для редагування.\n";
+        return;
+    }
+
+    cout << "\n-- Редагування картки --\n";
+    cout << "Введіть номер книги (1 - " << books.size() << "): ";
+
+    int bookNumber;
+    if (!(cin >> bookNumber)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Невірне введення.\n";
+        return;
+    }
+
+    int idx = bookNumber - 1;
+    if (idx < 0 || idx >= static_cast<int>(books.size())) {
+        cout << "Картка з таким номером не існує.\n";
+        return;
+    }
+
+    Book& b = books[idx];
+
+    cout << "\nПоточні дані:\n";
+    cout << "1) Назва: "     << b.title        << '\n';
+    cout << "2) Автор: "     << b.author       << '\n';
+    cout << "3) Жанр: "      << b.genre        << '\n';
+    cout << "4) Рік: "       << b.year         << '\n';
+    cout << "5) Ціна: "      << b.price        << '\n';
+    cout << "6) Наявність: " << b.availability << '\n';
+
+    cout << "\nЩо бажаєте змінити? ";
+    int option;
+    cin >> option;
+    cin.ignore();
+
+    switch (option) {
+        case 1:
+            cout << "Нова назва: ";
+            getline(cin, b.title);
+            break;
+        case 2:
+            cout << "Новий автор: ";
+            getline(cin, b.author);
+            break;
+        case 3:
+            cout << "Новий жанр: ";
+            getline(cin, b.genre);
+            break;
+        case 4:
+            cout << "Новий рік: ";
+            while (!(cin >> b.year)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Введіть число: ";
+            }
+            break;
+        case 5:
+            cout << "Нова ціна: ";
+            while (!(cin >> b.price)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Введіть число: ";
+            }
+            break;
+        case 6:
+            cout << "Нова наявність (так/ні): ";
+            getline(cin >> ws, b.availability);
+            break;
+        default:
+            cout << "Невідома опція.\n";
+            return;
+    }
+
+    cout << "\nКартку успішно змінено!\n";
 }
