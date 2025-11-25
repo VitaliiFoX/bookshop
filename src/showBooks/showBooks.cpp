@@ -120,10 +120,71 @@ void ViewAllBooks(vector<Book> &books)
     cout << "\nКінець списку.\n";
 }
 
-string toLowerStr(const string& s) {
-    string r = s;
-    for (char& c : r) c = tolower(c);
-    return r;
+static const pair<string, string> uk_pairs[] = {
+    {"А", "а"}, {"Б", "б"}, {"В", "в"}, {"Г", "г"}, {"Ґ", "ґ"},
+    {"Д", "д"}, {"Е", "е"}, {"Є", "є"}, {"Ж", "ж"}, {"З", "з"},
+    {"И", "и"}, {"І", "і"}, {"Ї", "ї"}, {"Й", "й"}, {"К", "к"},
+    {"Л", "л"}, {"М", "м"}, {"Н", "н"}, {"О", "о"}, {"П", "п"},
+    {"Р", "р"}, {"С", "с"}, {"Т", "т"}, {"У", "у"}, {"Ф", "ф"},
+    {"Х", "х"}, {"Ц", "ц"}, {"Ч", "ч"}, {"Ш", "ш"}, {"Щ", "щ"},
+    {"Ь", "ь"}, {"Ю", "ю"}, {"Я", "я"}
+};
+
+string toLowerStr(const string& s)
+{
+    string out;
+    size_t i = 0;
+
+    while (i < s.size())
+    {
+        unsigned char c = s[i];
+
+        // ---------- 1) LATIN ASCII ----------
+        if (c < 128)
+        {
+            out += tolower(c);
+            i++;
+        }
+        else
+        {
+            // ---------- 2) UTF-8 Ukrainian letter (2 bytes) ----------
+            // Беремо повний мультибайтовий символ
+            string utf8char;
+
+            if ((c & 0xE0) == 0xC0 && i + 1 < s.size())
+            {
+                utf8char = s.substr(i, 2);
+                i += 2;
+            }
+            else
+            {
+                // fallback: просто копіюємо
+                out += s[i];
+                i++;
+                continue;
+            }
+
+            // Шукаємо відповідність у таблиці великих літер
+            bool matched = false;
+            for (auto& p : uk_pairs)
+            {
+                if (utf8char == p.first)
+                {
+                    out += p.second;
+                    matched = true;
+                    break;
+                }
+            }
+
+            if (!matched)
+            {
+                // Якщо літера вже мала або неукраїнська — просто копіюємо
+                out += utf8char;
+            }
+        }
+    }
+
+    return out;
 }
 
 // ---------------------- Пошук ----------------------
