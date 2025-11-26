@@ -135,7 +135,10 @@ void showUserMenu() {
         else if (option == 2) {
             int userIndex = login();
             if (userIndex != -1)
+            {
                 personalCabinet(userIndex);
+                break;
+            }
             else
                 cout << " Невірний e-mail або пароль!\n";
         }
