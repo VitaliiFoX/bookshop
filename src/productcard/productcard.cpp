@@ -29,7 +29,7 @@ void ProductCardModule(vector<Book>& books) {
 
         if (!(cin >> option)) {
             cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            // cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Невірне введення.\n";
             continue;
         }
@@ -70,14 +70,14 @@ void CreateProductCard(vector<Book>& books) {
     cout << "Введіть рік видання: ";
     while (!(cin >> b.year)) {
         cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        // cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Введіть ціле число для року: ";
     }
 
     cout << "Введіть ціну книги: ";
     while (!(cin >> b.price)) {
         cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        // cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Введіть число для ціни: ";
     }
 
@@ -99,7 +99,7 @@ void CheckProductCard(const vector<Book>& books) {
     int bookNumber;
     if (!(cin >> bookNumber)) {
         cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        // cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Невірне введення.\n";
         return;
     }
@@ -131,7 +131,7 @@ void EditProductCard(vector<Book>& books) {
     int bookNumber;
     if (!(cin >> bookNumber)) {
         cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        // cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "Невірне введення.\n";
         return;
     }
@@ -174,7 +174,7 @@ void EditProductCard(vector<Book>& books) {
             cout << "Новий рік: ";
             while (!(cin >> b.year)) {
                 cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                // cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "Введіть число: ";
             }
             break;
@@ -182,7 +182,7 @@ void EditProductCard(vector<Book>& books) {
             cout << "Нова ціна: ";
             while (!(cin >> b.price)) {
                 cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                // cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "Введіть число: ";
             }
             break;

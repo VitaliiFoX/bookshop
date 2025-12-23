@@ -37,7 +37,7 @@ string trim(const string& str)
 // ===== Ввід користувача =====
 UserInput getInput() {
     UserInput input;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    // cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     cout << "\n   Реєстрація нового користувача    \n";
     cout << "Введіть ваш e-mail: ";
@@ -84,7 +84,7 @@ void printResult(int code) {
 // ===== ЛОГІН З TRIM =====
 int login() {
     string email, password;
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    // cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     cout << "\n    Вхід у систему    \n";
     cout << "E-mail: ";

@@ -45,7 +45,7 @@ void addToCart(vector<Basket>& basket, vector<Book>& books) {
     }
 
     cout << "Введіть назву книги: ";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // очистка перед getline
+    // cin.ignore(numeric_limits<streamsize>::max(), '\n'); // очистка перед getline
     string title;
     getline(cin, title);
 
