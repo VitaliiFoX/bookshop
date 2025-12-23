@@ -144,9 +144,3 @@ void showUserMenu() {
         }
     } while (option != 0);
 }
-
-// ===== main() =====
-int main() {
-    showUserMenu();
-    return 0;
-}
